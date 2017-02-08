@@ -4,7 +4,12 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-/* line 6, ../../compass/sass/styles.scss */
+/* line 7, ../../compass/sass/styles.scss */
+.top-nav button {
+  border-radius: 0;
+}
+
+/* line 13, ../../compass/sass/styles.scss */
 .evil-or-not-btn {
   position: absolute;
   top: 0px;
@@ -12,7 +17,7 @@ body {
   width: 50%;
 }
 
-/* line 13, ../../compass/sass/styles.scss */
+/* line 20, ../../compass/sass/styles.scss */
 .standings-btn {
   position: absolute;
   top: 0px;
@@ -20,22 +25,33 @@ body {
   width: 50%;
 }
 
-/* line 20, ../../compass/sass/styles.scss */
+/* line 27, ../../compass/sass/styles.scss */
 #game-wrapper {
-  border: dashed 1px rgba(0, 0, 0, 0.8);
   height: 400px;
   width: 300px;
   margin: auto;
 }
 
-/* line 27, ../../compass/sass/styles.scss */
+/* line 35, ../../compass/sass/styles.scss */
+#img-wrapper img {
+  display: block;
+  width: 300px;
+  height: 400px;
+}
+
+/* line 43, ../../compass/sass/styles.scss */
+#btns-wrapper span {
+  font-size: 18px;
+}
+
+/* line 49, ../../compass/sass/styles.scss */
 .evil-btn {
-  margin: 5px;
+  margin: 10px;
   width: 100px;
 }
 
-/* line 32, ../../compass/sass/styles.scss */
+/* line 54, ../../compass/sass/styles.scss */
 .not-evil-btn {
-  margin: 5px;
+  margin: 10px;
   width: 100px;
 }

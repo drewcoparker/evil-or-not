@@ -2,8 +2,11 @@ extends layout
 
 block content
     
-    button.evil-or-not-btn.btn.btn-primary Back to the game
-    button.standings-btn.btn.btn-warning Standings
+    div.top-nav
+        a(href="/")
+            button.evil-or-not-btn.btn.btn-primary Back to the game
+        a(href="/standings")
+            button.standings-btn.btn.btn-warning Standings
     
     div.container.col-sm-8.col-sm-offset-2
         div.row
@@ -11,10 +14,13 @@ block content
             
             div#game-wrapper
                 div#img-wrapper
-                    img(src="http://placehold.it/298x398")
+                    img(src="#{imageToRender}")
                 div.text-center#character
-                    h3 M. Night Shymalan  
+                    h3= imageTitle
                 div.text-center#btns-wrapper
-                    button.evil-btn.btn.btn-danger Evil!
-                    button.not-evil-btn.btn.btn-success Not!  
+                    a(href="/vote/evil/#{imageId}")
+                        button.evil-btn.btn.btn-danger Evil!
+                    span or
+                    a(href="/vote/not/#{imageId}")
+                        button.not-evil-btn.btn.btn-success Not!  
     
