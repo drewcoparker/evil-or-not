@@ -1,12 +1,13 @@
 extends layout
 
 block content
-    
+
     div.top-nav
         a(href="/")
             button.evil-or-not-btn.btn.btn-primary Back to the game
         a(href="/standings")
             button.standings-btn.btn.btn-warning Standings
-            
-            
-    
+
+    div.container.col-sm-8.col-sm-offset-2
+        div.row
+            h1.text-center #{msg}

@@ -14,15 +14,19 @@ connection.connect();
 
 // GET index
 router.get('/', function(req, res, next) {
-    var getImagesQuery = `SELECT * FROM images`;
+    var getImagesQuery = `select * from images where id NOT IN (select image_id from votes where ip = "::1")`;
     connection.query(getImagesQuery, (error, results, fields) => {
         var randomIndex = Math.floor(Math.random() * results.length);
-        res.render('index', {
-            title: 'Evil or Not',
-            imageToRender: `/images/${results[randomIndex].img_url}`,
-            imageTitle: results[randomIndex].img_name,
-            imageId: results[randomIndex].id
-        });
+        if (results.length === 0) {
+            res.render('game_over', { msg: "Game over" });
+        } else {
+            res.render('index', {
+                title: 'Evil or Not',
+                imageToRender: `/images/${results[randomIndex].img_url}`,
+                imageTitle: results[randomIndex].img_name,
+                imageId: results[randomIndex].id
+            });
+        }
     })
 });
 
@@ -45,8 +49,18 @@ router.get('/vote/:vote_direction/:image_id', (req, res, next) => {
 
 // GET Standings
 router.get('/standings', (req, res, next) => {
-    // res.send('asdf');
-    res.render('standings', {});
+    var standingsQuery = `SELECT
+                            images.id,
+                            images.img_url,
+                            images.img_name,
+                            SUM(votes.vote_direction) as total_votes from votes
+	                        inner join images on images.id = votes.image_id
+                            group by votes.image_id`;
+    connection.query(standingsQuery, (error, results, fields) => {
+        if (error) throw error;
+        res.json(results);
+        // res.render('standings', { totals: results });
+    })
 })
 
 
