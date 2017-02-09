@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var config = require('../config/config.js')
+
+// MySql module
 var mysql  = require('mysql');
 var connection = mysql.createConnection({
     host     : config.host,
@@ -8,9 +10,16 @@ var connection = mysql.createConnection({
     password : config.password,
     database : config.database
 });
-
 connection.connect();
 
+// Multer module
+var multer = require('multer');
+var upload = multer({dest: 'public/images'});
+var type = upload.single('imageToUpload');
+var fs = require('fs');
+
+
+/********Routes**********/
 
 // GET index
 router.get('/', function(req, res, next) {
@@ -18,7 +27,7 @@ router.get('/', function(req, res, next) {
     connection.query(getImagesQuery, (error, results, fields) => {
         var randomIndex = Math.floor(Math.random() * results.length);
         if (results.length === 0) {
-            res.render('game_over', { msg: "Game over" });
+            res.render('game_over', { msg: "You've voted on everything already." });
         } else {
             res.render('index', {
                 title: 'Evil or Not',
@@ -58,10 +67,48 @@ router.get('/standings', (req, res, next) => {
                             group by votes.image_id`;
     connection.query(standingsQuery, (error, results, fields) => {
         if (error) throw error;
-        // res.json(results);
         res.render('standings', { totals: results });
     })
 })
+
+
+
+
+// GET test sql injections warding
+router.get('/test', (req, res, nex) => {
+    var id = 0;
+    var query = `SELECT * FROM images WHERE id > ?`;
+    connection.query(query, [id], (error, results, fields) => {
+        res.json(results);
+    })
+})
+
+
+// Get uploadImage
+router.get('/upload_image', (req, res, next) => {
+    res.render('upload_image', {});
+})
+
+// Post uploadImage
+router.post('/formSubmit', type, (req, res, next) => {
+    var character = req.body.characterName;
+    var tempPath = req.file.path;
+    var targetPath = `public/images/${req.file.originalname}`;
+    fs.readFile(tempPath, (error, contents) => {
+        fs.writeFile(targetPath, contents, (error) => {
+            if (error) throw error;
+            var insertQuery = `INSERT INTO images (img_url, img_name) value (?,?)`;
+            connection.query(insertQuery, [req.file.originalname, character], (dberror, results, fields) => {
+                if (dberror) throw dberror;
+                fs.unlink(tempPath, (unlinkErr) => {
+                    if (unlinkErr) throw unlinkErr;
+                    res.redirect('/');
+                });
+            })
+        })
+    });
+})
+
 
 
 module.exports = router;

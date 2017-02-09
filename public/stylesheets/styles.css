@@ -60,3 +60,22 @@ body {
 .table-wrapper {
   margin-top: 50px;
 }
+
+/* line 63, ../../compass/sass/styles.scss */
+#upload-form {
+  margin-top: 60px;
+}
+
+/* line 67, ../../compass/sass/styles.scss */
+.end-message {
+  margin-top: 50px;
+}
+/* line 69, ../../compass/sass/styles.scss */
+.end-message h3 {
+  margin-top: 40px;
+}
+
+/* line 74, ../../compass/sass/styles.scss */
+.cancel-btn {
+  margin-top: 50px;
+}

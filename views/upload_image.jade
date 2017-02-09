@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    
+    div.container
+        div.row
+            div.form-wrapper.col-sm-8.col-sm-offset-2
+                h3.text-center Upload a character
+                form#upload-form(method='post' action='formSubmit' enctype='multipart/form-data')
+                    div.form-group
+                        label Character's name
+                        input.form-control(type="text" name="characterName")
+                    div.form-group
+                        label File input
+                        input(type='file' name='imageToUpload')
+                    button.btn.btn-primary(type='submit') Upload
+                div.text-center.cancel-btn
+                    a(href="/standings")
+                        button.btn.btn-danger Cancel
+                    

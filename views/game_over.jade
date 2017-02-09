@@ -10,4 +10,9 @@ block content
 
     div.container.col-sm-8.col-sm-offset-2
         div.row
-            h1.text-center #{msg}
+            div.end-message.text-center
+                h2 #{msg}
+                h3 Perhaps you'd like to add another character?
+                div.add-btn
+                    a(href="/upload_image")
+                        button.btn.btn-info Add character
