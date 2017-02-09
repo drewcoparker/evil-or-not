@@ -58,8 +58,8 @@ router.get('/standings', (req, res, next) => {
                             group by votes.image_id`;
     connection.query(standingsQuery, (error, results, fields) => {
         if (error) throw error;
-        res.json(results);
-        // res.render('standings', { totals: results });
+        // res.json(results);
+        res.render('standings', { totals: results });
     })
 })
 

@@ -8,5 +8,18 @@ block content
         a(href="/standings")
             button.standings-btn.btn.btn-warning Standings
             
-            
-    
+    div.container    
+        div.row
+            h3.text-center Evilness standings. The higher the number, the more the evil.
+            div.table-wrapper.col-sm-8.col-sm-offset-2
+                table.table.table-bordered.table-striped
+                    tr
+                        th #
+                        th Character
+                        th Points
+                        -for (character of totals)
+                            tr 
+                                td= character.id
+                                td= character.img_name
+                                td= character.total_votes
+                                    
